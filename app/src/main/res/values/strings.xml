@@ -11,7 +11,7 @@
     <string name="tab1">最热</string>
     <string name="tab2">最新</string>
     <string name="tab3">技术</string>
-    <string name="isInitialized">topicStatus.txt</string>
+    <string name="isInitialized">status.txt</string>
     <string name="v2ex">V2EX Client</string>
     <string name="all_nodes">http://www.v2ex.com/api/nodes/all.json</string>
 </resources>

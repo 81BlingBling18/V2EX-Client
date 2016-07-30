@@ -12,6 +12,7 @@ import java.util.ArrayList;
  */
 public class TopicFragmentPagerAdapter extends FragmentPagerAdapter {
 
+
     private ArrayList<Fragment> fragments;
     private String[] tabs = new String[]{"最热","最新","技术"} ;
 

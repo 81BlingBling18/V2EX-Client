@@ -16,6 +16,8 @@ public class V2EX extends Application {
     public static final int HOT_TOPICS = 0;
     public static final int NEW_TOPICS = 1;
     public static final int TECH_TOPICS = 2;
+    public static final int ALL_NODES = 3;
+    public static final int ARBITRARY = 4;
 
     @Override
     public void onCreate(){
@@ -27,7 +29,7 @@ public class V2EX extends Application {
         return v2EX;
     }
 
-    public static void Initialize(int topicType){
+    public static void initialize(int topicType){
         SharedPreferences sharedPreferences = V2EX.getInstance().getApplicationContext().getSharedPreferences(V2EX.getInstance().getApplicationContext().getString(R.string.isInitialized)
         ,MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -40,6 +42,9 @@ public class V2EX extends Application {
                 break;
             case TECH_TOPICS:
                 editor.putBoolean("techTopics", true);
+                break;
+            case ALL_NODES:
+                editor.putBoolean("allNodes",true);
                 break;
             default:
                 break;
@@ -56,6 +61,8 @@ public class V2EX extends Application {
                 return sharedPreferences.getBoolean("newTopics",false);
             case TECH_TOPICS:
                 return sharedPreferences.getBoolean("techTopics",false);
+            case ALL_NODES:
+                return sharedPreferences.getBoolean("allNodes", false);
             default:
                 return false;
         }

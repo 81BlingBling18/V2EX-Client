@@ -50,8 +50,7 @@ public class GetFromHtml implements AbstractGetter {
             List<TopicFromSingleTopic> tempList = gson.fromJson(topicData, new TypeToken<List<TopicFromSingleTopic>>(){}.getType());
             TopicFromSingleTopic topic = tempList.get(0);
 
-            Bitmap avatar = BitmapHelper.getByUrl("http:" + topic.getNode().getAvatar_large());
-            Log.d("cell",topic.getNode().getAvatar_large());
+            Bitmap avatar = BitmapHelper.getByUrl("http:" + topic.getMember().getAvatar_large());
             TopicItem item = new TopicItem();
             item.setTitle(topic.getTitle());
             item.setReplies(topic.getReplies());
@@ -64,7 +63,6 @@ public class GetFromHtml implements AbstractGetter {
             item.setContent(topic.getContent());
             list.add(item);
         }
-        Log.d("cell", list.size() + "");
         return list;
     }
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.lenovo.v2ex.Database.DataBase;
 import com.example.lenovo.v2ex.Global.V2EX;
 import com.example.lenovo.v2ex.ItemClasses.TopicItem;
 import com.example.lenovo.v2ex.R;
@@ -61,7 +62,8 @@ public class TopicItemAdapter extends RecyclerView.Adapter<TopicItemAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.username.setText(topicList.get(position).getUsername());
-        holder.nodeName.setText(topicList.get(position).getNodeName() + " ");
+        String node = DataBase.get(topicList.get(position).getNodeName());
+        holder.nodeName.setText(node);
         holder.title.setText(topicList.get(position).getTitle());
         holder.replies.setText(topicList.get(position).getReplies().toString() + "个回复");
         holder.avatar.setImageBitmap(topicList.get(position).getImage());

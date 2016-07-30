@@ -15,6 +15,18 @@ public class NodeIntroduce {
     private String footer;
     private int created;
 
+    public NodeIntroduce(int created, String footer, String header, int id, String name, String title, String title_alternative, int topics, String url) {
+        this.created = created;
+        this.footer = footer;
+        this.header = header;
+        this.id = id;
+        this.name = name;
+        this.title = title;
+        this.title_alternative = title_alternative;
+        this.topics = topics;
+        this.url = url;
+    }
+
     public int getCreated() {
         return created;
     }
@@ -50,4 +62,8 @@ public class NodeIntroduce {
     public String getUrl() {
         return url;
     }
+    public void setHeader(String header){
+        this.header = header;
+    }
+
 }

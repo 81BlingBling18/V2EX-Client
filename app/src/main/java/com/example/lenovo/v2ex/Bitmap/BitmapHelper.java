@@ -6,6 +6,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.example.lenovo.v2ex.Global.V2EX;
+import com.squareup.picasso.Picasso;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -27,17 +28,13 @@ public class BitmapHelper {
     }
 
     public static String output(Bitmap bitmap,String name){
-        Log.d("holo","output" + name);
         FileOutputStream out = null;
         BufferedOutputStream bufferedOutputStream;
         try{
-            Log.d("holo","output" + name);
             File outputImage = new File(Environment.getExternalStorageDirectory()+"/v2ex/" + name);
-            Log.d("pic", "保存的地址" + outputImage.getAbsolutePath());
-
             out = new FileOutputStream(outputImage);
             bufferedOutputStream = new BufferedOutputStream(out);
-            if(bitmap.getByteCount() < 1024 * 1024){
+            if(bitmap.getByteCount() < 512 * 512){
                 bitmap.compress(android.graphics.Bitmap.CompressFormat.JPEG,100,bufferedOutputStream);
             }else{
                 bitmap.compress(android.graphics.Bitmap.CompressFormat.JPEG,70,bufferedOutputStream);
@@ -51,10 +48,7 @@ public class BitmapHelper {
     }
 
     public static Bitmap get(String name){
-        Log.d("holo", "from the bitmapHelper get method");
         String path =Environment.getExternalStorageDirectory() + "/v2ex/" + name;
-        Log.d("holo", "from the bitmapHelper get method");
-        Log.d("pic", "读取的地址" + path);
         return BitmapFactory.decodeFile(path);
     }
 
@@ -66,7 +60,6 @@ public class BitmapHelper {
     }
 
     public static Bitmap getByUrl(String url){
-        Log.d("holo", url);
         Bitmap bitmap = null;
         try{
             URL bitmapURL = new URL(url);
@@ -88,6 +81,13 @@ public class BitmapHelper {
             e.printStackTrace();
         }
         Log.d("holo", "return bitmap" + bitmap.toString());
+
+
+//        try{
+//            bitmap = Picasso.with(V2EX.getInstance().getApplicationContext()).load(url).get();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
       return bitmap;
     }
 }

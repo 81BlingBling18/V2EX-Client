@@ -18,7 +18,8 @@ public class TechTopics extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent,Bundle savedInstanceState){
+       View v = super.onCreateView(inflater, parent, savedInstanceState);
         super.init(V2EX.TECH_TOPICS, R.string.tech_topics,new GetTopics(new GetFromHtml()));
-        return super.onCreateView(inflater, parent, savedInstanceState);
+        return v;
     }
 }

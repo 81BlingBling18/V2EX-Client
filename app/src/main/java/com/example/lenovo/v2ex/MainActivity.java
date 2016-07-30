@@ -16,19 +16,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.lenovo.v2ex.Adapter.TopicFragmentPagerAdapter;
+import com.example.lenovo.v2ex.Database.DataBase;
+import com.example.lenovo.v2ex.Global.V2EX;
+import com.example.lenovo.v2ex.Interface.Update;
+import com.example.lenovo.v2ex.ItemClasses.Node;
+import com.example.lenovo.v2ex.ItemClasses.NodeIntroduce;
 import com.example.lenovo.v2ex.TopicsFragment.HotTopics;
 import com.example.lenovo.v2ex.TopicsFragment.NewTopics;
 import com.example.lenovo.v2ex.TopicsFragment.TechTopics;
+import com.example.lenovo.v2ex.net.GetAllNodes;
+import com.example.lenovo.v2ex.net.InternetUtils;
+import com.zzhoujay.richtext.RichText;
 
 import java.io.File;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,Update{
 
     private ArrayList<Fragment> list;
     private TabLayout tabLayout;
     private int[] ids = new int[]{R.string.tab1,R.string.tab2,R.string.tab3};
+
 
 
     @Override
@@ -38,12 +47,19 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         //初始化本地文件夹
         File file = new File(Environment.getExternalStorageDirectory(),"v2ex/https://i.v2ex.co/");
         if(! file.exists()){
             file.mkdirs();
         }
+
+        //初始化所有节点数据库
+        if(!V2EX.isInitialized(V2EX.ALL_NODES)){
+            if(InternetUtils.accessible()){
+                GetAllNodes.getAllNodes(this);
+            }
+        }
+
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -94,10 +110,7 @@ public class MainActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabsFromPagerAdapter(adapter);
 
-
-
        // new GetFromHtml().get();
-
     }
 
     @Override
@@ -148,5 +161,11 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void update(Object object){
+        ArrayList<NodeIntroduce> list = (ArrayList<NodeIntroduce>) object;
+        DataBase.update(list);
+        V2EX.initialize(V2EX.ALL_NODES);
     }
 }

@@ -20,9 +20,9 @@ import com.example.lenovo.v2ex.net.GetTopics;
 public class HotTopics extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        View v = super.onCreateView(inflater,container,savedInstanceState);
         super.init(V2EX.HOT_TOPICS, R.string.hot_topics, new GetTopics(new GetFromAPI()));
-        return super.onCreateView(inflater,container,savedInstanceState);
+        return v;
     }
 }
 

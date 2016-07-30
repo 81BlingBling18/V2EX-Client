@@ -16,7 +16,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="5">
 
                 <ImageView
                     android:id="@+id/avatar"
@@ -27,7 +27,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="11"
                 android:orientation="vertical">
 
                 <TextView
@@ -39,7 +39,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/nodeName"
@@ -60,7 +60,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="4"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -72,12 +72,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
+                        android:textSize="@dimen/small_text_size"
                         android:text="111"/>
 
                     <TextView
                         android:id="@+id/lastModified"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textSize="@dimen/small_text_size"
                         android:layout_alignParentBottom="true"
                         android:text="111"/>
                 </RelativeLayout>

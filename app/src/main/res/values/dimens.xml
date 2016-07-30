@@ -16,4 +16,5 @@
     <dimen name="avatar_width">60dp</dimen>
     <dimen name="large_text">50dp</dimen>
     <dimen name="node_padding">5dp</dimen>
+    <dimen name="small_text_size">13dp</dimen>
 </resources>

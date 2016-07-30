@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.example.lenovo.v2ex.Bitmap.BitmapHelper;
 import com.example.lenovo.v2ex.Global.V2EX;
+import com.example.lenovo.v2ex.ItemClasses.NodeIntroduce;
 import com.example.lenovo.v2ex.ItemClasses.TopicItem;
 
 import java.util.ArrayList;
@@ -40,6 +41,12 @@ public class DataBase extends SQLiteOpenHelper {
             "replies int," +
             "avatar text)";
 
+    public static final String CREATE_NODES_DATA = "create table nodes(" +
+            "name text primary key," +
+            "title text," +
+            "topicNumber int," +
+            "header text)";
+
     private DataBase(Context context, String name, int version){
         super(context,name,null,version);
         mContext = context;
@@ -47,9 +54,8 @@ public class DataBase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db){
-        Log.d("holo","create database success");
         db.execSQL(CREATE_DATA);
-        Log.d("holo","create database success");
+        db.execSQL(CREATE_NODES_DATA);
     }
 
     @Override
@@ -75,13 +81,25 @@ public class DataBase extends SQLiteOpenHelper {
                 values.put("created", item.getCreated());
                 values.put("content",item.getContent());
                 db.insert("topics",null,values);
+                values.clear();
             }
+    }
+    public static void update(ArrayList<NodeIntroduce> list){
+        delete();
+        for(NodeIntroduce introduce: list){
+            ContentValues values = new ContentValues();
+            values.put("name", introduce.getName());
+            values.put("title", introduce.getTitle());
+            values.put("header",introduce.getHeader());
+            values.put("topicNumber",introduce.getTopics());
+            db.insert("nodes", null, values);
+            values.clear();
+        }
     }
 
     public static ArrayList<TopicItem> get(int category){
         ArrayList<TopicItem> list = new ArrayList<>();
         Cursor cursor = db.query("topics",null,"category == ?",new String[]{category + ""},null,null,null);
-        Log.d("holo","cursor" + cursor.toString());
         if(cursor.moveToFirst()){
             do {
                 String title = cursor.getString(cursor.getColumnIndex("title"));
@@ -90,11 +108,9 @@ public class DataBase extends SQLiteOpenHelper {
                 String nodeName = cursor.getString(cursor.getColumnIndex("nodeName"));
                 Integer lastModified = cursor.getInt(cursor.getColumnIndex("lastModified"));
                 String avatar = cursor.getString(cursor.getColumnIndex("avatar"));
-                Log.d("holo",avatar);
                 String url = cursor.getString(cursor.getColumnIndex("url"));
                 Integer created = cursor.getInt(cursor.getColumnIndex("created"));
                 String content = cursor.getString(cursor.getColumnIndex("content"));
-                Log.d("holo","avatar" + avatar);
                 Bitmap bitmap = BitmapHelper.get(avatar);
                 TopicItem item = new TopicItem(title,username,nodeName,replies,lastModified,bitmap,url,created,content);
                 list.add(item);
@@ -103,8 +119,32 @@ public class DataBase extends SQLiteOpenHelper {
         return list;
     }
 
+    public static String get(String name){
+        Cursor cursor = db.query("nodes", null, "name == ?", new String[]{name}, null, null, null);
+        String title = "";
+        if(cursor.moveToFirst()){
+            title = cursor.getString(cursor.getColumnIndex("title"));
+        }
+        return title;
+    }
+
+    public static ArrayList<NodeIntroduce>get(){
+        ArrayList<NodeIntroduce> list = new ArrayList<>();
+        Cursor cursor = db.query("nodes", null, null, null, null, null, null);
+        if(cursor.moveToFirst()){
+            do{
+                String title = cursor.getString(cursor.getColumnIndex("title"));
+                String header = cursor.getString(cursor.getColumnIndex("header"));
+                String name = cursor.getString(cursor.getColumnIndex("name"));
+                int topicNumber = cursor.getInt(cursor.getColumnIndex("topicNumber"));
+                NodeIntroduce node = new NodeIntroduce(0, null, header, 0, name, title, null, topicNumber, null);
+                list.add(node);
+            }while (cursor.moveToNext());
+        }
+        return list;
+    }
+
     private static void delete(int category){
-        Log.d("holo", "delete");
         Cursor cursor = db.query("topics",null,"category == ?",new String[]{category + ""},null,null,null);
         if(cursor.moveToFirst()){
             do{
@@ -114,5 +154,8 @@ public class DataBase extends SQLiteOpenHelper {
                 db.delete("topics","id == ?",new String[]{id + ""});
             }while (cursor.moveToNext());
         }
+    }
+    private static void delete(){
+        db.delete("nodes", null, null);
     }
 }

@@ -15,6 +15,7 @@ public class ReplyItem implements Parcelable{
     String content;
     String username;
     String floor;
+    String url;
 
 
     public void setAvatar(Bitmap avatar) {
@@ -55,6 +56,12 @@ public class ReplyItem implements Parcelable{
 
     public String getUsername() {
         return username;
+    }
+    public String getUrl(){
+        return url;
+    }
+    public void setUrl(String url){
+        this.url = url;
     }
 
     @Override

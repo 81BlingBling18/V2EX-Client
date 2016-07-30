@@ -22,7 +22,8 @@ public class NewTopics extends BaseFragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        View v = super.onCreateView(inflater,container,savedInstanceState);
         super.init(V2EX.NEW_TOPICS, R.string.new_topics, new GetTopics(new GetFromAPI()));
-        return super.onCreateView(inflater,container,savedInstanceState);
+        return v;
 }
 }
